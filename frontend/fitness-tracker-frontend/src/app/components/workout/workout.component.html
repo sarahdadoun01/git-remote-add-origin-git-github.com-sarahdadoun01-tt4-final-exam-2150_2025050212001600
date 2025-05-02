@@ -1,0 +1,75 @@
+<div *ngIf="!editMode">
+    <h2>Add Workout</h2>
+
+    <form #workoutForm="ngForm" (ngSubmit)="addWorkout()">
+      <label>
+        Date:
+        <input type="date" [(ngModel)]="newWorkout.date" name="date" required>
+      </label><br>
+    
+      <label>
+        Type:
+        <input type="text" [(ngModel)]="newWorkout.type" name="type" required>
+      </label><br>
+    
+      <label>
+        Duration (min):
+        <input type="number" [(ngModel)]="newWorkout.duration" name="duration" required>
+      </label><br>
+    
+      <label>
+        Calories Burned:
+        <input type="number" [(ngModel)]="newWorkout.caloriesBurned" name="caloriesBurned" required>
+      </label><br>
+    
+      <button type="submit" [disabled]="workoutForm.invalid">Add Workout</button>
+    </form>
+</div>
+
+<div *ngIf="editMode">
+
+    <h2>Edit Workout</h2>
+
+    <form (submit)="updateWorkout()">
+      <label>Date: <input type="date" [(ngModel)]="editingWorkout!.date" name="editDate"></label><br>
+      <label>Type: <input type="text" [(ngModel)]="editingWorkout!.type" name="editType"></label><br>
+      <label>Duration (min): <input type="number" [(ngModel)]="editingWorkout!.duration" name="editDuration"></label><br>
+      <label>Calories Burned: <input type="number" [(ngModel)]="editingWorkout!.caloriesBurned" name="editCalories"></label><br>
+
+      <button type="submit">Update Workout</button>
+      <button type="button" (click)="cancelEdit()">Cancel</button>
+    </form>
+
+</div>
+
+<hr>
+
+<h2>Workouts</h2>
+
+<table border="1" cellpadding="8">
+
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Type</th>
+      <th>Duration</th>
+      <th>Calories</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let workout of workouts">
+      <td>{{ workout.date }}</td>
+      <td>{{ workout.type }}</td>
+      <td>{{ workout.duration }} min</td>
+      <td>{{ workout.caloriesBurned }}</td>
+      <td>
+        <button (click)="editWorkout(workout)">Edit</button>
+        <button (click)="deleteWorkout(workout.id)">Delete</button>
+      </td>      
+    </tr>
+  </tbody>
+
+</table>
+
